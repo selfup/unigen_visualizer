@@ -1,6 +1,6 @@
 defmodule Unigen do
   @moduledoc """
-    Builds singular and clusters of universes
+    Builds singular universe
   """
 
   @spec planes(number) :: List[Map]
@@ -20,11 +20,5 @@ defmodule Unigen do
     |> List.flatten
     |> Enum.map(&(Analyzer.set_charge(&1)))
     |> Analyzer.field_charge(limit)
-  end
-
-  @spec generate(number) :: :ok
-  def generate(limit) do
-    %{charge: charge, universe: universe} = build(limit)
-    IO.puts "#{length(universe)} - #{charge}\n"
   end
 end
