@@ -7,8 +7,9 @@ defmodule UniApi.Router do
   end
 
   scope "/api/v1", UniApi do
-    pipe_through :api # Use the default browser stack
+    pipe_through :api
 
     get "/small", PageController, :index
+    get "/incremental", PageController, :incremental
   end
 end
