@@ -34,7 +34,7 @@ defmodule UniApi.PageControllerTest do
       "message" => message
     } = json_response(conn, 200)
 
-    abuse_message = "the size param you provided is to large for this free api"
+    abuse_message = "the size param you provided is too large for this free api"
 
     assert universes == nil
     assert abuse == true
