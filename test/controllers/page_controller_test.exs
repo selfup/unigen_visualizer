@@ -10,11 +10,34 @@ defmodule UniApi.PageControllerTest do
     assert charge == "ionic" || charge == "anionic" || charge == "neutral"
   end
 
-  test "GET /api/v1/incremental", %{conn: conn} do
+  test "GET /api/v1/incremental without abusive size", %{conn: conn} do
     conn = get conn, "/api/v1/incremental?size=1"
-    response = json_response(conn, 200)
 
-    assert is_list(response) == true
-    assert length(response) == 1
+    %{
+      "universes" => universes,
+      "abuse" => abuse,
+      "message" => message
+    } = json_response(conn, 200)
+
+    assert is_list(universes) == true
+    assert length(universes) == 1
+    assert abuse == false
+    assert message == "here is a free sample!"
+  end
+
+  test "GET /api/v1/incremental with abusive size", %{conn: conn} do
+    conn = get conn, "/api/v1/incremental?size=11"
+
+    %{
+      "universes" => universes,
+      "abuse" => abuse,
+      "message" => message
+    } = json_response(conn, 200)
+
+    abuse_message = "the size param you provided is to large for this free api"
+
+    assert universes == nil
+    assert abuse == true
+    assert message == abuse_message
   end
 end
