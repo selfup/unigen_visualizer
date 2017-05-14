@@ -2,7 +2,11 @@ defmodule UniApi.PageController do
   use UniApi.Web, :controller
 
   def index(conn, _params) do
-    json(conn, Unigen.build(2))
+    render conn, "index.html"
+  end
+
+  def small(conn, _params) do
+    json(conn, Unigen.build(10))
   end
 
   def incremental(conn, %{"size" => size} = params) do
@@ -23,7 +27,7 @@ defmodule UniApi.PageController do
         %{
           universes: nil,
           abuse: true,
-          message: "the size param you provided is to large for this free api"
+          message: "the size param you provided is too large for this free api"
         }
       )
     end
