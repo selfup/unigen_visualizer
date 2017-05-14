@@ -1,36 +1,92 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
+<div id="container" style="height: 400px"></div>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<script>
+const renderChart = (data) => {
+  var chart = new Highcharts.Chart({
+    chart: {
+      renderTo: 'container',
+      margin: 100,
+      type: 'scatter',
+      options3d: {
+          enabled: true,
+          alpha: 10,
+          beta: 30,
+          depth: 250,
+          viewDistance: 5,
+          fitToPlot: false,
+        }
+      },
+      title: {
+        text: 'Randomly Generated Universe'
+      },
+      subtitle: {
+        text: 'For your visual pleasure :P'
+      },
+      plotOptions: {
+        scatter: {
+          width: 10,
+          height: 10,
+          depth: 10
+        }
+      },
+      yAxis: {
+        min: 0,
+        max: 10,
+        title: null
+      },
+      xAxis: {
+        min: 0,
+        max: 10,
+        gridLineWidth: 1
+      },
+      zAxis: {
+        min: 0,
+        max: 10,
+        showFirstLabel: false
+      },
+      legend: {
+        enabled: true
+      },
+      series: [
+        {
+          name: 'Positive Charge Atom',
+          colorByPoint: false,
+          data: data.universe.filter(atom => atom.charge === 1).map((atom) => {
+            const { x, y, z } = atom
+            return [x, y, z]
+          })
+        },
+        {
+          name: 'Neutral Charge Atom',
+          colorByPoint: false,
+          data: data.universe.filter(atom => atom.charge === 0).map((atom) => {
+            const { x, y, z } = atom
+            return [x, y, z]
+          })
+        },
+        {
+          name: 'Negative Charge Atom',
+          colorByPoint: false,
+          data: data.universe.filter(atom => atom.charge === -1).map((atom) => {
+            const { x, y, z } = atom
+            return [x, y, z]
+          })
+        }
+      ],
+    }
+  );
+}
+
+axios.get('/api/v1/small')
+  .then((res) => {
+    renderChart(res.data)
+  })
+  .catch((err) => {
+    throw new Error(err)
+  })
+</script>

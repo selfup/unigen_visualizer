@@ -6,7 +6,7 @@ defmodule UniApi.PageControllerTest do
     %{"charge" => charge, "universe" => universe} = json_response(conn, 200)
 
     assert is_list(universe) == true
-    assert length(universe) == 27
+    assert length(universe) == 1331
     assert charge == "ionic" || charge == "anionic" || charge == "neutral"
   end
 
@@ -34,7 +34,7 @@ defmodule UniApi.PageControllerTest do
       "message" => message
     } = json_response(conn, 200)
 
-    abuse_message = "the size param you provided is to large for this free api"
+    abuse_message = "the size param you provided is too large for this free api"
 
     assert universes == nil
     assert abuse == true
