@@ -10,6 +10,7 @@
 </style>
 
 <div id="container" style="height: 400px"></div>
+<button class="new-data">Fetch New Data</button>
 
 <script>
 const renderChart = (data) => {
@@ -88,11 +89,19 @@ const renderChart = (data) => {
   );
 }
 
-axios.get('/api/v1/small')
-  .then((res) => {
-    renderChart(res.data)
-  })
-  .catch((err) => {
-    throw new Error(err)
-  })
+const featchAndRender = () => {
+  axios.get('/api/v1/small')
+    .then((res) => {
+      renderChart(res.data)
+    })
+    .catch((err) => {
+      throw new Error(err)
+    })
+}
+
+featchAndRender()
+
+document.querySelector('.new-data').addEventListener('click', (e) => {
+  featchAndRender()
+})
 </script>
