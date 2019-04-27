@@ -5,7 +5,7 @@ defmodule UniApi.Application do
     import Supervisor.Spec
 
     children = [
-      supervisor(UniApiWeb.Endpoint, []),
+      supervisor(UniApiWeb.Endpoint, [])
     ]
 
     opts = [
