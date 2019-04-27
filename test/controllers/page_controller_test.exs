@@ -2,7 +2,7 @@ defmodule UniApi.PageControllerTest do
   use UniApi.ConnCase
 
   test "GET /api/v1/small", %{conn: conn} do
-    conn = get conn, "/api/v1/small"
+    conn = get(conn, "/api/v1/small")
     %{"charge" => charge, "universe" => universe} = json_response(conn, 200)
 
     assert is_list(universe) == true
@@ -11,7 +11,7 @@ defmodule UniApi.PageControllerTest do
   end
 
   test "GET /api/v1/incremental without abusive size", %{conn: conn} do
-    conn = get conn, "/api/v1/incremental?size=1"
+    conn = get(conn, "/api/v1/incremental?size=1")
 
     %{
       "universes" => universes,
@@ -26,7 +26,7 @@ defmodule UniApi.PageControllerTest do
   end
 
   test "GET /api/v1/incremental with abusive size", %{conn: conn} do
-    conn = get conn, "/api/v1/incremental?size=11"
+    conn = get(conn, "/api/v1/incremental?size=11")
 
     %{
       "universes" => universes,

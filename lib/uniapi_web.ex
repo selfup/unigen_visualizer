@@ -1,62 +1,61 @@
-defmodule UniApi.Web do
+defmodule UniApiWeb do
   @moduledoc """
-  A module that keeps using definitions for controllers,
-  views and so on.
+  The entrypoint for defining your web interface, such
+  as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use UniApi.Web, :controller
-      use UniApi.Web, :view
+      use UniApiWeb, :controller
+      use UniApiWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
   on imports, uses and aliases.
 
   Do NOT define functions inside the quoted expressions
-  below.
+  below. Instead, define any helper function in modules
+  and import those modules here.
   """
-
-  def model do
-    quote do
-      # Define common model functionality
-    end
-  end
 
   def controller do
     quote do
-      use Phoenix.Controller
-
-      import UniApi.Router.Helpers
-      import UniApi.Gettext
+      use Phoenix.Controller, namespace: UniApiWeb
+      import Plug.Conn
+      import UniApiWeb.Router.Helpers
+      import UniApiWeb.Gettext
     end
   end
 
   def view do
     quote do
-      use Phoenix.View, root: "web/templates"
+      use Phoenix.View,
+        root: "lib/Smache_web/templates",
+        namespace: UniApiWeb
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import UniApi.Router.Helpers
-      import UniApi.ErrorHelpers
-      import UniApi.Gettext
+      import UniApiWeb.Router.Helpers
+      import UniApiWeb.ErrorHelpers
+      import UniApiWeb.Gettext
     end
   end
 
   def router do
     quote do
       use Phoenix.Router
+      import Plug.Conn
+      import Phoenix.Controller
     end
   end
 
   def channel do
     quote do
       use Phoenix.Channel
-      import UniApi.Gettext
+      import UniApiWeb.Gettext
     end
   end
 

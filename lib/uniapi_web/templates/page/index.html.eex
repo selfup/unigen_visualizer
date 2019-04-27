@@ -90,7 +90,7 @@ const renderChart = (data) => {
 }
 
 const featchAndRender = () => {
-  axios.get('/api/v1/small')
+  axios.get('/large')
     .then((res) => {
       renderChart(res.data)
     })

@@ -20,14 +20,12 @@ defmodule UniApi.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-
       # The default endpoint for testing
-      @endpoint UniApi.Endpoint
+      @endpoint UniApiWeb.Endpoint
     end
   end
 
   setup tags do
-
     :ok
   end
 end

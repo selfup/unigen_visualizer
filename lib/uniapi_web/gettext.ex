@@ -1,4 +1,4 @@
-defmodule UniApi.Gettext do
+defmodule UniApiWeb.Gettext do
   @moduledoc """
   A module providing Internationalization with a gettext-based API.
 
